@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xeniaherzi <xeniaherzi@student.42.fr>      +#+  +:+       +#+        */
+/*   By: xeherzi <xeherzi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 16:21:27 by xeherzi           #+#    #+#             */
-/*   Updated: 2023/08/22 14:03:13 by xeniaherzi       ###   ########.fr       */
+/*   Updated: 2023/08/22 16:21:07 by xeherzi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@ char	**find_path(char **envp, char *cmd)
 		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
 		{
 			if (ft_strlen(envp[i]) < 6)
-				error_exit("no local executable AND PATH is unset silly!", 2);
+				error_exit("no local executable AND PATH not set!", 2);
 			path = ft_split(&envp[i][5], ':');
 			if (!path)
-				error_exit("malloc fail (go to jail)\n", 12);
+				error_exit("malloc fail\n", 12);
 			return (cmd_2_path(path, cmd));
 		}
 		i++;
 	}
-	error_exit("NO PATH VAR FOUND IN ENV (or exact path)", 2);
+	error_exit("NO PATH VAR FOUND IN ENV ou exact", 2);
 	return (NULL);
 }
 
@@ -54,13 +54,13 @@ char	**cmd_2_path(char **old_path, char *cmd)
 	proper_path = malloc((ptrarrlen(old_path) + 1) * sizeof(char *));
 	slash_cmd = ft_strjoin("/", cmd);
 	if (!proper_path || !slash_cmd)
-		error_exit("malloc fail (go to jail)\n", 12);
+		error_exit("malloc fail\n", 12);
 	i = 0;
 	while (old_path[i])
 	{
 		proper_path[i] = ft_strjoin(old_path[i], slash_cmd);
 		if (!proper_path[i])
-			error_exit("malloc fail (go to jail)\n", 12);
+			error_exit("malloc fail\n", 12);
 		free(old_path[i]);
 		i++;
 	}

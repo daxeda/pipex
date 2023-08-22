@@ -3,18 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: xeniaherzi <xeniaherzi@student.42.fr>      +#+  +:+       +#+         #
+#    By: xeherzi <xeherzi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/01 11:51:57 by xeniaherzi        #+#    #+#              #
-#    Updated: 2023/08/22 14:02:02 by xeniaherzi       ###   ########.fr        #
+#    Updated: 2023/08/22 16:18:21 by xeherzi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME         = pipex
-FLAGS        = -Wall -Wextra -g -o $@
+FLAGS        = -Wall -Wextra -Werror
 CC           = gcc
 # -Werror
-LINKFLAGS    = -I include -I LIBFT
+LINKFLAGS    = -I include -I../libft
 
 SOURCEFILES  := pipex.c \
                 path.c \
@@ -28,7 +28,7 @@ SOURCES      := $(addprefix $(SRC_DIR), $(SOURCEFILES))
 all: $(NAME)
 
 $(NAME): $(OBJ_DIR) $(OFILES) $(SRCS)
-	@$(CC) $(OFILES) $(COMPIL_FLAGS) $(LINKFLAGS) LIBFT/libft.a
+	@$(CC) $(OFILES) $(COMPIL_FLAGS) $(LINKFLAGS) libft/libft.a -o $(NAME)
 	@printf "\n$(NAME) compiled!\n"
 
 $(OBJ_DIR)%.o : $(SRC_DIR)%.c | $(OBJ_DIR)
