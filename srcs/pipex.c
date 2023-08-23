@@ -12,32 +12,37 @@
 
 #include "pipex.h"
 
-void	find_and_exec(char **cmd, char **envp)
+void	find_and_execute(char **command, char **environment)
 {
-	char	**path;
+	char	**executable_paths;
+	int		i = 0;
 
-	if (ft_strchr(*cmd, ' '))
-		cmd = ft_split(*cmd, ' ');
-	if (!cmd)
-		error_exit("malloc fail\n", 12);
-	if (access(*cmd, F_OK | X_OK) == 0)
+	while (command[i])
+		i++;
+
+	if (i > 1)
+		command = ft_split(*command, ' ');
+
+	if (!command)
+		exit_with_error("Memory allocation failed", 12);
+
+	if (access(*command, F_OK | X_OK) == 0)
+		execve(*command, command, environment);
+	else
 	{
-		execve(*cmd, cmd, envp);
-		error_exit("exec fail\n", 127);
-	}
-	path = find_path(envp, *cmd);
-	if (!path)
-		error_exit("malloc fail\n", 12);
-	while (path)
-	{
-		if (access(*path, F_OK | X_OK) == 0)
+		executable_paths = find_executable_paths(environment, *command);
+		if (!executable_paths)
+			exit_with_error("Executable paths not found", 12);
+
+		i = 0;
+		while (executable_paths[i])
 		{
-			execve(*path, cmd, envp);
-			error_exit("exec fail", 127);
+			if (access(executable_paths[i], F_OK | X_OK) == 0)
+				execve(executable_paths[i], command, environment);
+			i++;
 		}
-		path++;
+		exit_with_error("No executable found", 2);
 	}
-	error_exit("No executable found", 2);
 }
 
 void	baby_1(char **argv, char **envp, int *pipe_fd)
