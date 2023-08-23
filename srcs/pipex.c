@@ -12,6 +12,18 @@
 
 #include "pipex.h"
 
+static void	try_executing(char **executable_paths, char **command, char **environment)
+{
+	int i = 0;
+
+	while (executable_paths[i])
+	{
+		if (access(executable_paths[i], F_OK | X_OK) == 0)
+			execve(executable_paths[i], command, environment);
+		i++;
+	}
+}
+
 void	find_and_execute(char **command, char **environment)
 {
 	char	**executable_paths;
@@ -34,16 +46,11 @@ void	find_and_execute(char **command, char **environment)
 		if (!executable_paths)
 			exit_with_error("Executable paths not found", 12);
 
-		i = 0;
-		while (executable_paths[i])
-		{
-			if (access(executable_paths[i], F_OK | X_OK) == 0)
-				execve(executable_paths[i], command, environment);
-			i++;
-		}
+		try_executing(executable_paths, command, environment);
 		exit_with_error("No executable found", 2);
 	}
 }
+
 
 void	baby_1(char **argv, char **envp, int *pipe_fd)
 {
