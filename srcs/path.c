@@ -6,7 +6,7 @@
 /*   By: xeherzi <xeherzi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 16:21:27 by xeherzi           #+#    #+#             */
-/*   Updated: 2023/08/22 16:21:07 by xeherzi          ###   ########.fr       */
+/*   Updated: 2023/08/23 13:03:59 by xeherzi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,35 @@
 
 char	**find_path(char **envp, char *cmd)
 {
-	int		i;
-	char	**path;
+	int		index;
+	char	**search_path;
 
-	i = 0;
-	while (envp[i])
+	index = 0;
+	while (envp[index])
 	{
-		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
+		if (ft_strncmp(envp[index], "PATH=", 5) == 0)
 		{
-			if (ft_strlen(envp[i]) < 6)
-				error_exit("no local executable AND PATH not set!", 2);
-			path = ft_split(&envp[i][5], ':');
-			if (!path)
-				error_exit("malloc fail\n", 12);
-			return (cmd_2_path(path, cmd));
+			if (ft_strlen(envp[index]) < 6)
+				exit_error("no local executable AND PATH not set!", 2);
+			search_path = ft_split(&envp[index][5], ':');
+			if (!search_path)
+				exit_error("malloc fail\n", 12);
+			return (cmd_2_path(search_path, cmd));
 		}
-		i++;
+		index++;
 	}
-	error_exit("NO PATH VAR FOUND IN ENV ou exact", 2);
+	exit_error("no PATH variable found in env or exact", 2);
 	return (NULL);
 }
 
-static int	ptrarrlen(char **arr)
+static int	count_ptraritems(char **arr)
 {
-	int	i;
+	int	count;
 
-	i = 0;
-	while (arr[i])
-		i++;
-	return (i);
+	count = 0;
+	while (arr[count])
+		count++;
+	return (count);
 }
 
 char	**cmd_2_path(char **old_path, char *cmd)
@@ -51,16 +51,16 @@ char	**cmd_2_path(char **old_path, char *cmd)
 	char	*slash_cmd;
 	int		i;
 
-	proper_path = malloc((ptrarrlen(old_path) + 1) * sizeof(char *));
+	proper_path = malloc((count_ptraritems(old_path) + 1) * sizeof(char *));
 	slash_cmd = ft_strjoin("/", cmd);
 	if (!proper_path || !slash_cmd)
-		error_exit("malloc fail\n", 12);
+		exit_error("malloc fail\n", 12);
 	i = 0;
 	while (old_path[i])
 	{
 		proper_path[i] = ft_strjoin(old_path[i], slash_cmd);
 		if (!proper_path[i])
-			error_exit("malloc fail\n", 12);
+			exit_error("malloc fail\n", 12);
 		free(old_path[i]);
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: xeherzi <xeherzi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 15:21:08 by xeherzi           #+#    #+#             */
-/*   Updated: 2023/08/22 16:23:11 by xeherzi          ###   ########.fr       */
+/*   Updated: 2023/08/23 13:12:53 by xeherzi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,18 @@
 # include <stdlib.h> 
 # include <fcntl.h>
 # include "../libft/libft.h"
+# include <sys/stat.h>
 
 # define READ 0
 # define WRITE 1
 
-char	**find_executable_path(char **envp, char *cmd);
-char	**cmd_2_path(char **old_path, char *cmd);
-void	exit_with_error(const char *message, int exit_code);
-char	**convert_to_full_path(char **old_path, char *cmd);
-char	**find_path(char **envp, char *cmd);
-void	error_exit(const char *message, int exit_code);
+static int			count_ptraritems(char **arr);
+char				**cmd_2_path(char **old_path, char *cmd);
+void				find_and_execute(char **cmd, char **env);
+void				child_process(char **argv, char **envp, int *pipe_fd);
+void				parent_process(char **argv, char **envp, int *pipe_fd);
+static pid_t		safely_fork(void);
+void				exit_error(const char *message, int exit_code);
+char				**find_path(char **envp, char *cmd);
 
 #endif 

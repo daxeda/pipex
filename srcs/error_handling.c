@@ -1,9 +1,21 @@
-#include "pipex.h"
-#include <stdlib.h> // For exit function
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   error_handling.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: xeherzi <xeherzi@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/22 17:08:32 by xeherzi           #+#    #+#             */
+/*   Updated: 2023/08/23 12:27:39 by xeherzi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void error_exit(const char *message, int exit_code)
+#include "pipex.h"
+#include <stdlib.h>
+
+void	exit_error(const char *message, int exit_code)
+
 {
-    // Print an error message and exit with the specified exit code
-    fprintf(stderr, "Error: %s\n", message);
-    exit(exit_code);
+	fprintf(stderr, "Error: %s\n", message);
+	exit(exit_code);
 }

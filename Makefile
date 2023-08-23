@@ -6,19 +6,18 @@
 #    By: xeherzi <xeherzi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/01 11:51:57 by xeniaherzi        #+#    #+#              #
-#    Updated: 2023/08/22 16:18:21 by xeherzi          ###   ########.fr        #
+#    Updated: 2023/08/23 12:01:37 by xeherzi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME         = pipex
 FLAGS        = -Wall -Wextra -Werror
 CC           = gcc
-# -Werror
 LINKFLAGS    = -I include -I../libft
 
 SOURCEFILES  := pipex.c \
                 path.c \
-				error_handling.c 
+				error_handling.c \
 
 OBJ_DIR      := objs/
 OFILES       := $(addprefix $(OBJ_DIR), $(SOURCEFILES:.c=.o))
