@@ -1,4 +1,4 @@
-# pipexeval
+# pipex
 
 In the pipex project, I'm tasked with creating a simplified version of a shell command commonly
 used in Unix-like operating systems. The challenge revolves around replicating the functionality of the command:
